@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #f5f5f7;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@layer components {
+  .primary-button {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800;
+  }
+
+  .secondary-button {
+    @apply inline-flex min-h-11 items-center justify-center rounded-full bg-slate-100 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-200;
+  }
+
+  .icon-button {
+    @apply inline-flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-600 transition hover:bg-slate-200 hover:text-slate-950;
+  }
+
+  .danger-icon {
+    @apply hover:bg-rose-50 hover:text-rose-600;
+  }
+
+  .action-button {
+    @apply inline-flex min-h-10 items-center justify-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold transition;
+  }
+
+  .action-button.success {
+    @apply bg-emerald-50 text-emerald-700 hover:bg-emerald-100;
+  }
+
+  .action-button.neutral {
+    @apply bg-slate-100 text-slate-700 hover:bg-slate-200;
+  }
+
+  .action-button.danger {
+    @apply bg-rose-50 text-rose-700 hover:bg-rose-100;
+  }
+
+  .date-input {
+    @apply min-h-11 rounded-full border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm outline-none transition focus:border-slate-400 focus:ring-4 focus:ring-slate-200;
+  }
+
+  .summary-card {
+    @apply rounded-3xl bg-slate-50 px-4 py-3;
+  }
+
+  .summary-card span {
+    @apply block text-2xl font-semibold text-slate-950;
+  }
+
+  .summary-card p {
+    @apply mt-1 text-sm font-medium text-slate-500;
+  }
+
+  .section-block {
+    @apply rounded-[28px] bg-white/80 p-4 shadow-apple backdrop-blur sm:p-6;
+  }
+
+  .habit-card {
+    @apply rounded-[24px] border border-slate-100 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-apple sm:p-5;
+  }
+
+  .pill {
+    @apply rounded-full px-2.5 py-1 text-xs font-semibold;
+  }
+
+  .pill-build {
+    @apply bg-blue-50 text-blue-700;
+  }
+
+  .pill-limit {
+    @apply bg-amber-50 text-amber-700;
+  }
+
+  .pill-soft {
+    @apply bg-slate-100 text-slate-600;
+  }
+
+  .stat-number {
+    @apply text-lg font-semibold text-slate-950;
+  }
+
+  .stat-label {
+    @apply text-xs font-medium text-slate-500;
+  }
+
+  .empty-state {
+    @apply rounded-3xl border border-dashed border-slate-200 bg-white px-4 py-8 text-center text-sm font-medium text-slate-500;
+  }
+
+  .field span {
+    @apply mb-1.5 block text-sm font-medium text-slate-600;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    @apply w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-slate-400 focus:bg-white focus:ring-4 focus:ring-slate-200;
+  }
+
+  .field textarea {
+    resize: vertical;
+  }
+
+  .day-toggle {
+    @apply min-h-11 rounded-2xl bg-slate-100 text-xs font-semibold text-slate-600 transition hover:bg-slate-200;
+  }
+
+  .day-toggle-active {
+    @apply bg-slate-950 text-white hover:bg-slate-800;
+  }
+
+  .history-day {
+    @apply flex flex-col items-start gap-1 rounded-3xl border border-slate-100 bg-white px-4 py-4 text-left shadow-sm transition hover:border-slate-200 hover:shadow-apple;
+  }
+
+  .history-day-active {
+    @apply border-slate-950 ring-4 ring-slate-200;
+  }
+}

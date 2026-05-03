@@ -24,6 +24,10 @@ npm run dev
 
 Then open the local URL printed by Vite.
 
+## Deploy
+
+GitHub Pages should use the GitHub Actions source. The workflow builds the Vite app and publishes the `dist` folder.
+
 ## Tracking Logic
 
 The main scheduling logic lives in `src/utils/schedule.ts`.

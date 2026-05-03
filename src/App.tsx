@@ -2,6 +2,7 @@ import { CalendarDays, Plus, Sparkles } from "lucide-react";
 import { useMemo, useState } from "react";
 import { DashboardSection } from "./components/DashboardSection";
 import { HabitForm } from "./components/HabitForm";
+import { HistoryView } from "./components/HistoryView";
 import { starterHabits } from "./data/starterHabits";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import type { Habit, HabitLog } from "./types";

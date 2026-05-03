@@ -8,7 +8,7 @@ import { useLocalStorage } from "./hooks/useLocalStorage";
 import type { Habit, HabitLog } from "./types";
 import { formatLongDate, todayKey } from "./utils/dates";
 import { getLogForDate, isHabitScheduledOn, upsertLog } from "./utils/schedule";
-import { getDailySummary, getMotivation } from "./utils/stats";
+import { getDailySummary, getMotivation, getWeeklySummary } from "./utils/stats";
 
 export default function App() {
   const [habits, setHabits] = useLocalStorage<Habit[]>("daily-tracker-habits", starterHabits);
@@ -23,6 +23,7 @@ export default function App() {
   const positiveHabits = scheduled.filter((habit) => habit.category === "build");
   const limitHabits = scheduled.filter((habit) => habit.category === "limit");
   const summary = useMemo(() => getDailySummary(habits, logs, selectedDate), [habits, logs, selectedDate]);
+  const weeklySummary = useMemo(() => getWeeklySummary(habits, logs, selectedDate), [habits, logs, selectedDate]);
 
   function openNewHabitForm() {
     setEditingHabit(null);
@@ -127,6 +128,31 @@ export default function App() {
           </div>
         </div>
 
+        <section className="section-block">
+          <div className="mb-4">
+            <h2 className="text-xl font-semibold text-slate-950">Weekly Progress</h2>
+            <p className="text-sm text-slate-500">Monday through Sunday, {weeklySummary.weekLabel}</p>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-4">
+            <div className="summary-card">
+              <span>{weeklySummary.overallCompletionPercentage}%</span>
+              <p>Weekly completion</p>
+            </div>
+            <div className="summary-card">
+              <span>{weeklySummary.habitCompletionPercentage}%</span>
+              <p>Habit completion</p>
+            </div>
+            <div className="summary-card">
+              <span>{weeklySummary.limitSuccessPercentage}%</span>
+              <p>Kick habit success</p>
+            </div>
+            <div className="summary-card">
+              <span>{weeklySummary.slipUps}</span>
+              <p>Weekly slip-ups</p>
+            </div>
+          </div>
+        </section>
+
         <DashboardSection
           title="Today's Positive Habits"
           subtitle="Build the routines you want more of."
@@ -141,7 +167,7 @@ export default function App() {
         />
 
         <DashboardSection
-          title="Today's Limit/Quit Trackers"
+          title="Habits To Kick!"
           subtitle="Track success days, slip-ups, amounts, and triggers."
           habits={limitHabits}
           logs={logs}

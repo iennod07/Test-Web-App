@@ -1,5 +1,5 @@
 import type { DailySummary, Habit, HabitLog } from "../types";
-import { addDays, todayKey } from "./dates";
+import { addDays, endOfWeek, formatShortDate, getWeekDays, startOfWeek, todayKey } from "./dates";
 import { getLogForDate, isHabitScheduledOn } from "./schedule";
 
 function isSuccessfulLog(habit: Habit, log?: HabitLog) {
@@ -77,4 +77,47 @@ export function getMotivation(summary: DailySummary) {
     return "Progress is already logged. Finish the next small step.";
   }
   return "Start with the easiest tracker and build momentum.";
+}
+
+export function getWeeklySummary(habits: Habit[], logs: HabitLog[], selectedDate: string) {
+  const days = getWeekDays(selectedDate);
+  let positiveScheduled = 0;
+  let positiveCompleted = 0;
+  let limitScheduled = 0;
+  let limitSuccesses = 0;
+  let slipUps = 0;
+
+  for (const day of days) {
+    for (const habit of habits) {
+      if (!isHabitScheduledOn(habit, day)) continue;
+
+      const log = getLogForDate(logs, habit.id, day);
+
+      if (habit.category === "build") {
+        positiveScheduled += 1;
+        if (log?.status === "completed") positiveCompleted += 1;
+      } else {
+        limitScheduled += 1;
+        if (log?.status === "success") limitSuccesses += 1;
+        if (log?.status === "slip") slipUps += 1;
+      }
+    }
+  }
+
+  const allScheduled = positiveScheduled + limitScheduled;
+  const allSuccessful = positiveCompleted + limitSuccesses;
+
+  return {
+    weekStart: startOfWeek(selectedDate),
+    weekEnd: endOfWeek(selectedDate),
+    weekLabel: `${formatShortDate(startOfWeek(selectedDate))} - ${formatShortDate(endOfWeek(selectedDate))}`,
+    positiveScheduled,
+    positiveCompleted,
+    habitCompletionPercentage: positiveScheduled ? Math.round((positiveCompleted / positiveScheduled) * 100) : 0,
+    limitScheduled,
+    limitSuccesses,
+    limitSuccessPercentage: limitScheduled ? Math.round((limitSuccesses / limitScheduled) * 100) : 0,
+    overallCompletionPercentage: allScheduled ? Math.round((allSuccessful / allScheduled) * 100) : 0,
+    slipUps,
+  };
 }
